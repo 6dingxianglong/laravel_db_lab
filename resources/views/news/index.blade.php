@@ -1,7 +1,11 @@
 <div class="news-container" style="max-height: 400px; overflow: hidden;"> 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
         <p style="font-weight: bold; font-size: 2rem; margin: 0;">最新消息</p>
-        <a href="{{ route('news.all') }}" style="text-decoration: none; color: #666;">更多消息 »</a>
+        
+    @if(empty($hideMoreNewsHref))
+    <a href="{{ route('news.all') }}" style="text-decoration: none; color: #666;">更多消息 »</a>
+    @endif
+
     </div>
     <hr style="border-bottom: solid 1px #aaa; margin-top: 0; margin-bottom: 15px;">
 
