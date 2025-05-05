@@ -3,7 +3,7 @@
 @section('content')
     {{-- 顯示最新消息 --}}
     <div class="mb-5">
-        @include('news.index', ['news_items' => $news_items])
+        @include('news.index')
     </div>
 
     {{-- 顯示課程 tabs --}}
@@ -13,7 +13,7 @@
 
     {{-- 顯示課程卡片 --}}
     <div class="row">
-        @include('courses.index', ['courses' => $courses])
+        @include('courses.index')
     </div>
 
     <div class="d-flex justify-content-end mt-4">
