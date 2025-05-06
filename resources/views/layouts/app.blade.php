@@ -27,15 +27,15 @@
     </style>
 </head>
 <body>
-    @include('partials.header')
-    @include('partials.navbar')
+    @include('app.header')
+    @include('app.navbar')
 
     <main class="container mt-4">
         @yield('content')
     </main>
 
     <footer>
-        @include('partials.footer')
+        @include('app.footer')
     </footer>
 </body>
 </html>
