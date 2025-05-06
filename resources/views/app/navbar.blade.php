@@ -11,6 +11,6 @@
             </button>
         </form>
 
-        <button class="btn btn-success px-3 py-1">使用者登入</button>
+        @include('auth.auth')
     </div>
 </nav>
