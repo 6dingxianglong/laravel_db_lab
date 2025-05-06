@@ -14,6 +14,6 @@ class Student extends Authenticatable
     protected $primaryKey = 'sid';    
     public $incrementing = false;     // 因為 cid 是字串，不是自動遞增數字
     protected $keyType = 'string';    // 主鍵型別是 string
-    protected $fillable = ['sid', 'name', 'email', 'password', 'token']; 
+    protected $fillable = ['sid', 'name', 'email', 'password']; 
     protected $hidden = ['password', 'token',];
 }

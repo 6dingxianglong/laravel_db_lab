@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LearnController;
+use App\Http\Controllers\TeachController;
+use App\Http\Middleware\RedirectIfSessionExpired;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/news/all', [HomeController::class, 'allNews'])->name('news.all');
@@ -18,4 +20,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/learn', [LearnController::class, 'index'])->name('learn.index');
+Route::middleware([RedirectIfSessionExpired::class])->group(function () {
+    Route::get('/learn', [LearnController::class, 'index'])->name('learn.index');
+    Route::get('/teach', [TeachController::class, 'index'])->name('teach.index');
+});

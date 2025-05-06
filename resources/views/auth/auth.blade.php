@@ -3,7 +3,7 @@
 <nav class="auth navbar"> 
     {{-- 若教師已登入 --}}
     @auth('teacher')
-    <div class="text-white me-3">歡迎，{{ Auth::guard('teacher')->user()->name }}</div>
+    <a href="{{ route('teach.index') }}" class="text-white me-3">歡迎，{{ Auth::guard('teacher')->user()->name }}</a>
     <a href="{{ route('logout') }}" class="btn btn-danger px-3 py-1">登出</a>
 
     {{-- 若學生已登入 --}}

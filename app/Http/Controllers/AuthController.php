@@ -37,7 +37,7 @@ class AuthController extends Controller
             if ($user && $user->password === $credentials['password']) {
                 Auth::guard('teacher')->login($user); 
                 session()->flash('login_success', true);
-                return redirect()->intended('/learn');
+                return redirect()->intended('/teach');
             }
         }
 
