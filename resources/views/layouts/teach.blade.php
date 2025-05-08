@@ -8,7 +8,6 @@
     <style>
   
         .main-content {
-            margin-left: 25%; 
             padding: 20px;
             padding-top: 76px;
         }
@@ -37,7 +36,7 @@
         @include('teach.header')
     </header>
 
-    <div class="d-flex">
+    <div class="container mt-4">
         
         <main class="main-content">
             @yield('content')
