@@ -23,7 +23,7 @@ class TeachController extends Controller
         return view('teach.index', compact('courses'));
     }
 
-    public function manage(Request $request)
+    public function addAnnouncement(Request $request)
     {
         $teacherId = Auth::guard('teacher')->user()->tid;
         $courses = Course::where('tid', $teacherId)->get();
@@ -31,7 +31,7 @@ class TeachController extends Controller
         return view('teach.manage.announcement', compact('courses'));
     }
 
-    public function store(Request $request)
+    public function storeAnnouncement(Request $request)
     {
         $request->validate([
             'cid' => 'required|exists:course,cid',
