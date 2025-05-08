@@ -6,8 +6,7 @@
         </a>
 
         <div class="d-flex align-items-center">
-            <a href="#" class="btn btn-outline-secondary me-2">我的課程</a>
-            <a href="#" class="btn btn-outline-secondary me-2">我的作業</a>
+            <a href="{{ route('learn.index') }}" class="btn btn-outline-secondary me-2">我的課程</a>
             <a href="#" class="btn btn-outline-secondary me-2">我的成績</a>
 
             <p class="m-0 px-3 border-start border-end"><i class="bi bi-person-fill me-1"></i>{{ Auth::guard('student')->user()->name }}</p>
