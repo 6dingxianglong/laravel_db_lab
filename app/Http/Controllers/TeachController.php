@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -22,17 +23,13 @@ class TeachController extends Controller
         return view('teach.index', compact('courses'));
     }
 
-    public function manage()
+    public function manage(Request $request)
     {
         $teacherId = Auth::guard('teacher')->user()->tid;
-
-        $courses = Course::withCount('enrollments')
-            ->where('tid', $teacherId)
-            ->get();
+        $courses = Course::where('tid', $teacherId)->get();
 
         return view('teach.manage.announcement', compact('courses'));
     }
-
 
     public function store(Request $request)
     {
@@ -66,5 +63,5 @@ class TeachController extends Controller
     
         return redirect()->back()->with('success', '公告已成功儲存並寄出 email');
     }
-    
+
 }
