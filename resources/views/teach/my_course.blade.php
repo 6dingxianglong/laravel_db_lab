@@ -68,12 +68,12 @@
             <thead>
                 <tr>
                     <th>課程名稱</th>
-                    <th>學員人數</th>
                     <th>課程狀態</th>
                     <th>開始上課</th>
                     <th>截止上課</th>
-                    <th>公告</th>
-                    <th>作業</th>
+                    <th>學員人數</th>
+                    <th>公告管理</th>
+                    <th>作業管理</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,8 +84,8 @@
                         <td>即日起</td>
                         <td>無限期</td>
                         <td>{{ $course->enrollments_count }} 人</td>
-                        <td><a href="#" class="action-link">查看</a></td>
-                        <td><a href="#" class="action-link">查看</a></td>
+                        <td><a href="#" class="action-link">管理</a></td>
+                        <td><a href="#" class="action-link">管理</a></td>
                     </tr>
                 @endforeach
             </tbody>
