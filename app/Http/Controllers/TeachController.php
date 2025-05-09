@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
+use App\Models\Announcement;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -38,13 +40,12 @@ class TeachController extends Controller
             'content' => 'required|string',
         ]);
     
-        DB::table('announcement')->insert([
+        Announcement::create([
             'cid' => $request->cid,
             'title' => $request->title,
             'content' => $request->content,
             'timestamp' => now(),
         ]);
-
     
         $emails = DB::table('enrollment')
             ->join('student', 'enrollment.sid', '=', 'student.sid')
@@ -65,8 +66,7 @@ class TeachController extends Controller
     
     public function listAnnouncement($cid)
     {
-        $announcements = DB::table('announcement')
-            ->where('cid', $cid)
+        $announcements = Announcement::where('cid', $cid)
             ->orderByDesc('timestamp')
             ->get();
     
@@ -77,7 +77,7 @@ class TeachController extends Controller
 
     public function editAnnouncement($annid)
     {
-        $announcement = DB::table('announcement')->where('annid', $annid)->first();
+        $announcement = Announcement::findOrFail($annid);
         return view('teach.manage.announcement.edit', compact('announcement'));
     }
 
@@ -88,21 +88,21 @@ class TeachController extends Controller
             'content' => 'required|string',
         ]);
 
-        DB::table('announcement')
-            ->where('annid', $annid)
-            ->update([
-                'title' => $request->title,
-                'content' => $request->content,
-            ]);
+        $announcement = Announcement::findOrFail($annid);
+        $announcement->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
 
         return redirect()->back()->with('success', '公告已更新');
     }
 
     public function deleteAnnouncement($annid)
     {
-        DB::table('announcement')->where('annid', $annid)->delete();
+        $announcement = Announcement::findOrFail($annid);
+        $announcement->delete();
+        
         return redirect()->back()->with('success', '公告已刪除');
     }
 
-    
 }

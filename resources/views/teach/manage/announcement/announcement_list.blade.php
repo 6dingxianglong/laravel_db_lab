@@ -4,7 +4,6 @@
 <div class="container">
     <h2>{{ $course->name }} - 公告列表</h2>
     
-    <a href="{{ route('teach.ann.add') }}" class="btn btn-primary mb-3">新增公告</a>
     <a href="{{ route('teach.index') }}" class="btn btn-secondary mb-3">返回</a>
 
     <table class="table">

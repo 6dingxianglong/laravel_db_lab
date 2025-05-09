@@ -9,6 +9,7 @@ class Announcement extends Model
     protected $table = 'announcement';      
     protected $primaryKey = 'annid';    
     protected $fillable = ['annid', 'cid', 'title', 'content', 'timestamp']; 
+    public $timestamps = false;
 
     public function teacher()
     {
