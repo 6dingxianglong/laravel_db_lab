@@ -28,7 +28,7 @@ class TeachController extends Controller
         $teacherId = Auth::guard('teacher')->user()->tid;
         $courses = Course::where('tid', $teacherId)->get();
 
-        return view('teach.manage.announcement', compact('courses'));
+        return view('teach.manage.create', compact('courses'));
     }
 
     public function storeAnnouncement(Request $request)
@@ -63,5 +63,47 @@ class TeachController extends Controller
     
         return redirect()->back()->with('success', '公告已成功儲存並寄出 email');
     }
+    
+    public function listAnnouncement($cid)
+    {
+        $announcements = DB::table('announcement')
+            ->where('cid', $cid)
+            ->orderByDesc('timestamp')
+            ->get();
+    
+        $course = Course::findOrFail($cid);
+    
+        return view('teach.manage.announcement_list', compact('announcements', 'course'));
+    }
 
+    public function editAnnouncement($annid)
+    {
+        $announcement = DB::table('announcement')->where('annid', $annid)->first();
+        return view('teach.manage.edit', compact('announcement'));
+    }
+
+    public function updateAnnouncement(Request $request, $annid)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        DB::table('announcement')
+            ->where('annid', $annid)
+            ->update([
+                'title' => $request->title,
+                'content' => $request->content,
+            ]);
+
+        return redirect()->back()->with('success', '公告已更新');
+    }
+
+    public function deleteAnnouncement($annid)
+    {
+        DB::table('announcement')->where('annid', $annid)->delete();
+        return redirect()->back()->with('success', '公告已刪除');
+    }
+
+    
 }

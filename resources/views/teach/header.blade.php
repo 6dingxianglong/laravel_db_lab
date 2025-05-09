@@ -7,7 +7,7 @@
 
         <div class="d-flex align-items-center">
             <a href="#" class="btn btn-outline-secondary me-2">人員管理</a>
-            <a href="{{ route('teach.manage.announcement') }}" class="btn btn-outline-secondary me-2">新增公告</a>
+            <a href="{{ route('teach.manage.announcement.add') }}" class="btn btn-outline-secondary me-2">新增公告</a>
             <a href="#" class="btn btn-outline-secondary me-2">新增作業</a>
             <a href="#" class="btn btn-outline-secondary me-2">成績管理</a>
 

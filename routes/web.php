@@ -23,7 +23,12 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/learn', [LearnController::class, 'index'])->name('learn.index');
     Route::get('/teach', [TeachController::class, 'index'])->name('teach.index');
-    Route::get('/teach/manage/announcement', [TeachController::class, 'addAnnouncement'])->name('teach.manage.announcement');
+    Route::get('/teach/manage/announcement/add', [TeachController::class, 'addAnnouncement'])->name('teach.manage.announcement.add');
     Route::post('/teach/manage/announcement/store', [TeachController::class, 'storeAnnouncement'])->name('teach.manage.announcement.store');
+    
+    Route::get('/teach/manage/announcement/list/{cid}', [TeachController::class, 'listAnnouncement'])->name('teach.manage.announcement.list');
+    Route::get('/teach/manage/announcement/edit/{annid}', [TeachController::class, 'editAnnouncement'])->name('teach.manage.announcement.edit');
+    Route::put('/teach/manage/announcement/update/{annid}', [TeachController::class, 'updateAnnouncement'])->name('teach.manage.announcement.update');
+    Route::delete('/teach/manage/announcement/delete/{annid}', [TeachController::class, 'deleteAnnouncement'])->name('teach.manage.announcement.delete');
 
 });

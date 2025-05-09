@@ -25,6 +25,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">儲存公告</button>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">返回</a>
     </form>
 
     @if(session('success'))
