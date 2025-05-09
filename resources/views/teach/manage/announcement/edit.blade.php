@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <form action="{{ route('teach.manage.announcement.update', ['annid' => $announcement->annid]) }}" method="POST">
+    <form action="{{ route('teach.ann.update', ['annid' => $announcement->annid]) }}" method="POST">
         @csrf
         @method('PUT') <!-- Laravel 用於標示這是 PUT 請求 -->
 

@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{ route('teach.manage.announcement.store') }}" method="POST">
+    <form action="{{ route('teach.ann.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -25,7 +25,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">儲存公告</button>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">返回</a>
+        <a href="{{ route('teach.index') }}" class="btn btn-secondary">返回</a>
     </form>
 
     @if(session('success'))

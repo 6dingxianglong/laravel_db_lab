@@ -85,7 +85,7 @@
                         <td>無限期</td>
                         <td>{{ $course->enrollments_count }} 人</td>
                         <td>
-                            <a href="{{ route('teach.manage.announcement.list', ['cid' => $course->cid]) }}" class="action-link">
+                            <a href="{{ route('teach.ann.list', ['cid' => $course->cid]) }}" class="action-link">
                             管理
                         </td>                                                                       
                         <td><a href="#" class="action-link">管理</a></td>

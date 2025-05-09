@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
-use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -28,7 +27,7 @@ class TeachController extends Controller
         $teacherId = Auth::guard('teacher')->user()->tid;
         $courses = Course::where('tid', $teacherId)->get();
 
-        return view('teach.manage.create', compact('courses'));
+        return view('teach.manage.announcement.create', compact('courses'));
     }
 
     public function storeAnnouncement(Request $request)
@@ -73,13 +72,13 @@ class TeachController extends Controller
     
         $course = Course::findOrFail($cid);
     
-        return view('teach.manage.announcement_list', compact('announcements', 'course'));
+        return view('teach.manage.announcement.announcement_list', compact('announcements', 'course'));
     }
 
     public function editAnnouncement($annid)
     {
         $announcement = DB::table('announcement')->where('annid', $annid)->first();
-        return view('teach.manage.edit', compact('announcement'));
+        return view('teach.manage.announcement.edit', compact('announcement'));
     }
 
     public function updateAnnouncement(Request $request, $annid)

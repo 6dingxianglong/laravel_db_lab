@@ -86,7 +86,7 @@
                         <td>即日起</td>
                         <td>無限期</td>
                         <td>{{ $enrollment->course->enrollments_count }} 人</td>
-                        <td><a href="{{ route('learn.announcement.list', ['cid' => $enrollment->course->cid]) }}" class="action-link">查看</a>
+                        <td><a href="{{ route('learn.ann.list', ['cid' => $enrollment->course->cid]) }}" class="action-link">查看</a>
                         </td>
                         <td><a href="#" class="action-link">繳交</a></td>
                     </tr>
