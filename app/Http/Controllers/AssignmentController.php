@@ -38,4 +38,14 @@ class AssignmentController extends Controller
         return redirect()->back()->with('success', '作業已成功儲存');
     }
 
+    public function listAssignment($cid)
+    {
+        $assignments = Assignment::where('cid', $cid)
+            ->orderByDesc('deadline')
+            ->get();
+    
+        $course = Course::findOrFail($cid);
+    
+        return view('teach.manage.assignment.list', compact('assignments', 'course'));
+    }
 }

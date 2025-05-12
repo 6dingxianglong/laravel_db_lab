@@ -86,9 +86,14 @@
                         <td>{{ $course->enrollments_count }} 人</td>
                         <td>
                             <a href="{{ route('teach.ann.list', ['cid' => $course->cid]) }}" class="action-link">
-                            管理
+                                管理
+                            </a>
                         </td>                                                                       
-                        <td><a href="#" class="action-link">管理</a></td>
+                        <td>
+                            <a href="{{ route('teach.ass.list', ['cid' => $course->cid]) }}" class="action-link">
+                                管理
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

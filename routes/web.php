@@ -34,5 +34,6 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::delete('/teach/manage/announcement/delete/{annid}', [TeachController::class, 'deleteAnnouncement'])->name('teach.ann.delete');
     Route::get('/teach/manage/assignment/add', [AssignmentController::class, 'addAssignment'])->name('teach.ass.add');
     Route::post('teach/manage/assignment/store', [AssignmentController::class, 'storeAssignment'])->name('teach.ass.store');
-    
+    Route::get('/teach/manage/assignment/list/{cid}', [AssignmentController::class, 'listAssignment'])->name('teach.ass.list');
+
 });
