@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LearnController;
 use App\Http\Controllers\TeachController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\SubmissionController;
 use App\Http\Middleware\RedirectIfSessionExpired;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -40,5 +41,8 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/teach/manage/assignment/edit/{assid}', [AssignmentController::class, 'editAssignment'])->name('teach.ass.edit');
     Route::put('/teach/manage/assignment/update/{assid}', [AssignmentController::class, 'updateAssignment'])->name('teach.ass.update');
     Route::delete('/teach/manage/assignment/delete/{assid}', [AssignmentController::class, 'deleteAssignment'])->name('teach.ass.delete');
+
+    Route::get('/teach/manage/submissions/{assid}', [SubmissionController::class, 'listSubmission']) ->name('teach.ass.submissions');
+    Route::get('/submission/download/{filename}', [SubmissionController::class, 'download'])->name('submission.download');
 
 });
