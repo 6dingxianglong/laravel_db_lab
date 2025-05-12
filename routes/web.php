@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LearnController;
 use App\Http\Controllers\TeachController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Middleware\RedirectIfSessionExpired;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,5 +32,11 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/teach/manage/announcement/edit/{annid}', [TeachController::class, 'editAnnouncement'])->name('teach.ann.edit');
     Route::put('/teach/manage/announcement/update/{annid}', [TeachController::class, 'updateAnnouncement'])->name('teach.ann.update');
     Route::delete('/teach/manage/announcement/delete/{annid}', [TeachController::class, 'deleteAnnouncement'])->name('teach.ann.delete');
+    Route::get('/teach/manage/assignment/add', [AssignmentController::class, 'addAssignment'])->name('teach.ass.add');
+    Route::post('teach/manage/assignment/store', [AssignmentController::class, 'storeAssignment'])->name('teach.ass.store');
+    Route::get('/teach/manage/assignment/list/{cid}', [AssignmentController::class, 'listAssignment'])->name('teach.ass.list');
+    Route::get('/teach/manage/assignment/edit/{assid}', [AssignmentController::class, 'editAssignment'])->name('teach.ass.edit');
+    Route::put('/teach/manage/assignment/update/{assid}', [AssignmentController::class, 'updateAssignment'])->name('teach.ass.update');
+    Route::delete('/teach/manage/assignment/delete/{assid}', [AssignmentController::class, 'deleteAssignment'])->name('teach.ass.delete');
 
 });
