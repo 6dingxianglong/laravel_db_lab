@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="container">
+    
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
     <h2>{{ $course->name }} - 作業列表</h2>
     
     <a href="{{ route('learn.index') }}" class="btn btn-secondary mb-3">返回</a>
@@ -22,9 +30,15 @@
                     <td>{{ $assignment->description }}</td>
                     <td>{{ $assignment->deadline }}</td>
                     <td>
-                        
-                    </td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal{{ $assignment->assid }}">
+                            提交作業
+                        </button>
+                    </td>                    
                 </tr>
+
+                <!-- Modal -->
+                @include('learn.manage.assignment.modal', ['assignment' => $assignment])
+
             @endforeach
         </tbody>
     </table>
