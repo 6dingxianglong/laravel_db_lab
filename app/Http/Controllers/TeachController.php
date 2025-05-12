@@ -72,7 +72,7 @@ class TeachController extends Controller
     
         $course = Course::findOrFail($cid);
     
-        return view('teach.manage.announcement.announcement_list', compact('announcements', 'course'));
+        return view('teach.manage.announcement.list', compact('announcements', 'course'));
     }
 
     public function editAnnouncement($annid)
