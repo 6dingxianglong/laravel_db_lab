@@ -30,10 +30,15 @@
                     <td>{{ $assignment->description }}</td>
                     <td>{{ $assignment->deadline }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal{{ $assignment->assid }}">
-                            提交作業
-                        </button>
-                    </td>                    
+                        @if (\Carbon\Carbon::now()->lessThanOrEqualTo(\Carbon\Carbon::parse($assignment->deadline)))
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#submitModal{{ $assignment->assid }}">
+                                提交作業
+                            </button>
+                        @else
+                            <span class="text-danger">逾時繳交</span>
+                        @endif
+                    </td>
+                   
                 </tr>
 
                 <!-- Modal -->
