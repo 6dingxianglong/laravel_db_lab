@@ -7,8 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
   
-        .main-content {
-            margin-left: 25%; 
+  .main-content {
             padding: 20px;
             padding-top: 76px;
         }
@@ -37,7 +36,7 @@
         @include('learn.header')
     </header>
 
-    <div class="d-flex">
+    <div class="container mt-4">
         
         <main class="main-content">
             @yield('content')

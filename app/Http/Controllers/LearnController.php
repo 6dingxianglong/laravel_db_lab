@@ -29,6 +29,6 @@ class LearnController extends Controller
         $enrollment = Enrollment::where('cid', $cid)->firstOrFail();
         $course = $enrollment->course; 
                 
-        return view('learn.announcement_list', compact('announcements', 'course'));
+        return view('learn.manage.list', compact('announcements', 'course'));
     }
 }
