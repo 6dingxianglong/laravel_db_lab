@@ -21,8 +21,14 @@
                     <td>{{ $assignment->title }}</td>
                     <td>{{ $assignment->description }}</td>
                     <td>{{ $assignment->deadline }}</td>
-                   
-                    
+                    <td>
+                        <a href="{{ route('teach.ass.edit', ['assid' => $assignment->assid]) }}" class="btn btn-sm btn-warning">編輯</a>
+                        <form action="{{ route('teach.ass.delete', ['assid' => $assignment->assid]) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('確定要刪除嗎？')">刪除</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
