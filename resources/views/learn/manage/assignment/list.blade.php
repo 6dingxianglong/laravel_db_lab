@@ -35,7 +35,7 @@
                                 提交作業
                             </button>
                         @else
-                            <span class="text-danger">逾時繳交</span>
+                            <span class="text-danger">關閉作答</span>
                         @endif
                     </td>
                    
