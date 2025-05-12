@@ -24,6 +24,8 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/learn', [LearnController::class, 'index'])->name('learn.index');
     Route::get('/learn/announcement/list/{cid}', [LearnController::class, 'listAnnouncement'])->name('learn.ann.list');
+    Route::get('/learn/assignment/list/{cid}', [LearnController::class, 'listAssignment'])->name('learn.ass.list');
+
 
     Route::get('/teach', [TeachController::class, 'index'])->name('teach.index');
     Route::get('/teach/manage/announcement/add', [TeachController::class, 'addAnnouncement'])->name('teach.ann.add');
