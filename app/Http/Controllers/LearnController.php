@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Enrollment;
 use App\Models\Assignment;
@@ -22,20 +23,19 @@ class LearnController extends Controller
 
     public function listAnnouncement($cid)
     {
-        $assignments = Assignment::where('cid', $cid)
-            ->orderByDesc('deadline')
+        $announcements = Announcement::where('cid', $cid)
+            ->orderByDesc('timestamp')
             ->get();
     
         $enrollment = Enrollment::where('cid', $cid)->firstOrFail();
         $course = $enrollment->course; 
                 
-        return view('learn.manage.announcement.list', compact('assignments', 'course'));
+        return view('learn.manage.announcement.list', compact('announcements', 'course'));
     }
 
     public function listAssignment($cid)
     {
-        $assignments = DB::table('assignment')
-            ->where('cid', $cid)
+        $assignments = Assignment::where('cid', $cid)
             ->orderByDesc('deadline')
             ->get();
     

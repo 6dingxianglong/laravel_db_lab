@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Teacher;
+use App\Models\Enrollment;
 
 class Announcement extends Model
 {
