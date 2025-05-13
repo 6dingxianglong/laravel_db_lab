@@ -8,6 +8,7 @@ use App\Http\Controllers\LearnController;
 use App\Http\Controllers\TeachController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\GradeController;
 use App\Http\Middleware\RedirectIfSessionExpired;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -46,5 +47,9 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/submission/download/{filename}', [SubmissionController::class, 'download'])->name('submission.download');
     Route::post('/submission/update/{sid}/{assid}', [SubmissionController::class, 'updateAssignment'])->name('submission.update');
     Route::post('/submission/email', [SubmissionController::class, 'sendEmail'])->name('submission.email');
+
+    Route::get('/course/assignments', [GradeController::class, 'showCourseAssignments'])->name('course.assignments');
+    Route::get('/assignment/{cid}/{assid}/grades', [GradeController::class, 'showAssignmentGrades'])->name('assignment.grades');
+    Route::post('/grades/update', [GradeController::class, 'updateOrCreate'])->name('grade.updateOrCreate');
 
 });
