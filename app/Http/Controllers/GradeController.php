@@ -36,8 +36,17 @@ class GradeController extends Controller
 
         $grades = Grade::where('assid', $assid)->get()->keyBy('sid');
 
-        return view('teach.manage.grade.assignment_grades', compact('assignment', 'students', 'grades', 'cid'));
+        $scoreRanges = array_fill(0, 10, 0); // 10個區間：0-9, 10-19, ..., 90-100
+
+        foreach ($grades as $grade) {
+            $score = $grade->score;
+            $index = min(intval($score / 10), 9); // 最高分歸類到最後一格
+            $scoreRanges[$index]++;
+        }
+
+        return view('teach.manage.grade.assignment_grades', compact('assignment', 'students', 'grades', 'cid', 'scoreRanges'));
     }
+    
     public function updateOrCreate(Request $request)
     {
         $validated = $request->validate([

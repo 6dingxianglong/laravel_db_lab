@@ -41,5 +41,35 @@
             @endforeach
         </tbody>
     </table>
+
+    <h4 class="mt-5">成績分布圖</h4>
+    <canvas id="scoreChart" width="400" height="200"></canvas>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('scoreChart').getContext('2d');
+    const scoreChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+                '0-9', '10-19', '20-29', '30-39', '40-49', 
+                '50-59', '60-69', '70-79', '80-89', '90-100'
+            ],
+            datasets: [{
+                label: '人數',
+                data: @json($scoreRanges),
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true, stepSize: 1 }
+            }
+        }
+    });
+</script>
+
 @endsection
