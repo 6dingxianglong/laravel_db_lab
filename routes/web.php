@@ -45,5 +45,6 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/teach/manage/submissions/{assid}', [SubmissionController::class, 'listSubmission']) ->name('teach.ass.submissions');
     Route::get('/submission/download/{filename}', [SubmissionController::class, 'download'])->name('submission.download');
     Route::post('/submission/update/{sid}/{assid}', [SubmissionController::class, 'updateAssignment'])->name('submission.update');
+    Route::post('/submission/email', [SubmissionController::class, 'sendEmail'])->name('submission.email');
 
 });

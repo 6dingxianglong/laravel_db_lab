@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Assignment;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SubmissionController extends Controller
 {
@@ -50,5 +51,40 @@ class SubmissionController extends Controller
 
         return redirect()->back()->with('success', '作業評分成功');
     }
+
+    public function sendEmail(Request $request)
+    {
+        $sid = $request->input('sid'); // 單一學生 ID
+
+        if (empty($sid)) {
+            return back()->with('success', '未選擇學生。');
+        }
+
+        $submission = Submission::with('student')->where('sid', $sid)->first();
+
+        if (!$submission || !$submission->student) {
+            return back()->with('success', '找不到該學生的資料。');
+        }
+
+        $student = $submission->student;
+        $email = $student->email;
+
+        if ($email) {
+            $mailContent = "您參加的課程有一則新消息：\n\n" .
+                "標題：{$request->title}\n" .
+                "分數：{$request->score}\n" .
+                "回饋：{$request->feedback}";
+
+            Mail::raw($mailContent, function ($message) use ($email) {
+                $message->to($email)
+                    ->subject('作業新消息');
+            });
+
+            return back()->with('success', '通知信已成功寄出給 ' . $student->name);
+        }
+
+        return back()->with('success', '該學生沒有電子郵件地址。');
+    }
+
 
 }

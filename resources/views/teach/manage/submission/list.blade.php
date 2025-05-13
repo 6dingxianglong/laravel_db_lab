@@ -22,6 +22,7 @@
                 <th>檔案</th>
                 <th>分數</th>
                 <th>回饋</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +32,7 @@
                     <td>{{ $submission->student->name ?? '（未知）' }}</td>
                     <td>{{ $submission->submit_date }}</td>
                     <td>
-                        <a href="{{ route('submission.download', ['filename' => basename($submission->url)]) }}" target="_blank">下載</a>
+                        <a href="{{ route('submission.download', ['filename' => basename($submission->url)]) }}" target="_blank" class="btn btn-sm btn-info">下載</a>
                     </td>
                     <td colspan="2">
                         <form action="{{ route('submission.update', ['sid' => $submission->sid, 'assid' => $submission->assid]) }}" method="POST" class="row g-2 align-items-center">
@@ -45,16 +46,28 @@
                             <div class="col-auto">
                                 <button type="submit" class="btn btn-sm btn-primary">儲存</button>
                             </div>
-
                         </form>
                     </td>
+
+                    <td>
+                        <form action="{{ route('submission.email') }}" method="POST" style="display:inline;" id="emailForm{{ $submission->sid }}">
+                            @csrf
+                            <input type="hidden" name="sid" value="{{ $submission->sid }}">
+                            <input type="hidden" name="title" value="{{ $assignment->title }}">
+                            <input type="hidden" name="score" value="{{ $submission->score }}">
+                            <input type="hidden" name="feedback" value="{{ $submission->feedback }}">
+                            <button type="submit" class="btn btn-sm btn-warning" id="emailButton{{ $submission->sid }}">寄信</button>
+                        </form>
+                    </td>
+
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">尚無學生提交此作業。</td>
+                    <td colspan="7" class="text-center">尚無學生提交此作業。</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
 </div>
+
 @endsection
