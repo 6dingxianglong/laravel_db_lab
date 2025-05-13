@@ -9,12 +9,15 @@ use App\Models\Assignment;
 use App\Models\Enrollment;
 use App\Models\Student; 
 use Spatie\SimpleExcel\SimpleExcelWriter;
+use Illuminate\Support\Facades\Auth;
 
 class GradeController extends Controller
 {
     public function showCourseAssignments(Request $request)
     {
-        $courses = Course::all();
+        $teacher = Auth::guard('teacher')->user();
+        $courses = Course::where('tid', $teacher->tid)->get();        
+
         $selectedCid = $request->input('cid');
 
         $assignments = [];
