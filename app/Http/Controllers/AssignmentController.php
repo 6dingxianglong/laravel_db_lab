@@ -35,7 +35,7 @@ class AssignmentController extends Controller
             'deadline' => $request->deadline,
         ]);
 
-        return redirect()->back()->with('success', '作業已成功儲存');
+        return redirect()->back()->with('success', '作業已成功儲存')->with('selected_cid', $request->cid);
     }
 
     public function listAssignment($cid)
