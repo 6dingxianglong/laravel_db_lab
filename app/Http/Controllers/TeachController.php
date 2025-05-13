@@ -61,7 +61,7 @@ class TeachController extends Controller
             });
         }
     
-        return redirect()->back()->with('success', '公告已成功儲存並寄出 email');
+        return redirect()->back()->with('success', '公告已成功儲存並寄出 email')->with('selected_cid', $request->cid);
     }
     
     public function listAnnouncement($cid)
