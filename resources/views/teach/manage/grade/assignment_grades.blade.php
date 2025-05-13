@@ -3,7 +3,12 @@
 @section('content')
 <div class="container">
     <h2>作業：{{ $assignment->title }} — 全班成績</h2>
-    
+    <div class="mb-3">
+    <a href="{{ route('grade.export.excel', ['cid' => $cid, 'assid' => $assignment->assid]) }}" class="btn btn-success btn-sm">
+        下載 Excel
+    </a>
+</div>
+
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}

@@ -52,4 +52,7 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/assignment/{cid}/{assid}/grades', [GradeController::class, 'showAssignmentGrades'])->name('assignment.grades');
     Route::post('/grades/update', [GradeController::class, 'updateOrCreate'])->name('grade.updateOrCreate');
 
+    Route::get('/grades/export/excel/{cid}/{assid}', [GradeController::class, 'exportExcel'])->name('grade.export.excel');
+    Route::get('/grades/export/pdf/{cid}/{assid}', [GradeController::class, 'exportPdf'])->name('grade.export.pdf');
+
 });

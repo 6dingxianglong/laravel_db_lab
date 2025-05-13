@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Grade;
 use App\Models\Assignment;
-use App\Models\Submission;
 use App\Models\Enrollment;
 use App\Models\Student; 
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class GradeController extends Controller
 {
@@ -46,7 +46,7 @@ class GradeController extends Controller
 
         return view('teach.manage.grade.assignment_grades', compact('assignment', 'students', 'grades', 'cid', 'scoreRanges'));
     }
-    
+
     public function updateOrCreate(Request $request)
     {
         $validated = $request->validate([
@@ -69,6 +69,37 @@ class GradeController extends Controller
         );
 
         return back()->with('success', '成績已更新');
+    }
+
+    public function exportExcel($cid, $assid)
+    {
+        $assignment = Assignment::findOrFail($assid);
+        $fileName = "{$assignment->title}_成績.csv";  
+
+        $filePath = storage_path("app/public/{$fileName}");
+
+        $enrolledSids = Enrollment::where('cid', $cid)->pluck('sid');
+
+        $students = Student::whereIn('sid', $enrolledSids)->get();
+
+        $grades = Grade::where('assid', $assid)->get()->keyBy('sid');
+
+        $writer = SimpleExcelWriter::create($filePath)
+            ->addRow(['學號', '姓名', '分數']); 
+
+        foreach ($students as $student) {
+            $score = $grades[$student->sid]->score ?? ''; // 若無成績顯示空白
+
+            $writer->addRow([
+                $student->sid,
+                $student->name,
+                $score,
+            ]);
+        }
+
+        $writer->close();
+
+        return response()->download($filePath)->deleteFileAfterSend(true);
     }
 
 }
