@@ -29,6 +29,9 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
     Route::get('/learn/assignment/list/{cid}', [LearnController::class, 'listAssignment'])->name('learn.ass.list');
     Route::post('/learn/assignment/submit', [LearnController::class, 'submitAssignment'])->name('learn.ass.submit');
 
+    Route::get('learn/assignments/list', [LearnController::class, 'showCourseAssignments'])->name('learn.assignments');
+    Route::get('learn/assignment/{cid}/{assid}/grades',[LearnController::class,'showAssignmentGrades'])->name('learn.assignment.grades');
+
     Route::get('/teach', [TeachController::class, 'index'])->name('teach.index');
     Route::get('/teach/manage/announcement/add', [TeachController::class, 'addAnnouncement'])->name('teach.ann.add');
     Route::post('/teach/manage/announcement/store', [TeachController::class, 'storeAnnouncement'])->name('teach.ann.store');
