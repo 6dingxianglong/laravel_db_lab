@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Assignment;
 use App\Models\Submission;
+use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -37,20 +38,43 @@ class SubmissionController extends Controller
     public function updateAssignment(Request $request, $sid, $assid)
     {
         $request->validate([
-        'score' => 'nullable|numeric|min:0',
-        'feedback' => 'nullable|string|max:1000',
+            'score' => 'nullable|numeric|min:0',
+            'feedback' => 'nullable|string|max:1000',
         ]);
 
         Submission::where('assid', $assid)
-          ->where('sid', $sid)
-          ->update([
-              'score' => $request->score,
-              'feedback' => $request->feedback,
-          ]);
+            ->where('sid', $sid)
+            ->update([
+                'score' => $request->score,
+                'feedback' => $request->feedback,
+            ]);
 
+        $submission = Submission::with('assignment')
+            ->where('assid', $assid)
+            ->where('sid', $sid)
+            ->first();
 
-        return redirect()->back()->with('success', '作業評分成功');
+        if (!$submission || !$submission->assignment) {
+            return redirect()->back()->with('error', '找不到對應的作業或課程');
+        }
+
+        $cid = $submission->assignment->cid;
+
+        Grade::updateOrCreate(
+        [
+                'sid' => $sid,
+                'cid' => $cid,
+                'assid' => $assid,
+            ],
+            [
+                'score' => $request->score,
+                "timestamp" => now(), 
+            ]
+        );
+
+        return redirect()->back()->with('success', '作業評分成功，並已更新成績紀錄');
     }
+
 
     public function sendEmail(Request $request)
     {
