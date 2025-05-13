@@ -9,7 +9,10 @@
             <label for="course-select" class="form-label">選擇課程：</label>
             <select id="course-select" name="cid" class="form-select" required>
                 @foreach ($courses as $course)
-                    <option value="{{ $course->cid }}">{{ $course->name }}</option>
+                    <option value="{{ $course->cid }}"
+                        {{ session('selected_cid') == $course->cid ? 'selected' : '' }}>
+                        {{ $course->name }}
+                    </option>
                 @endforeach
             </select>
         </div>

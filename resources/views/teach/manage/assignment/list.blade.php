@@ -28,6 +28,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('確定要刪除嗎？')">刪除</button>
                         </form>
+                        <a href="{{ route('teach.ass.submissions', ['assid' => $assignment->assid]) }}" class="btn btn-sm btn-secondary">批改</a>
                     </td>
                 </tr>
             @endforeach

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Enrollment;
 
 class Assignment extends Model
 {
@@ -19,4 +20,9 @@ class Assignment extends Model
         'description',
         'deadline',
     ];
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class, 'cid', 'cid');
+    }
 }
