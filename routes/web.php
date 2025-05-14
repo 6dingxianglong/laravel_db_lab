@@ -9,6 +9,7 @@ use App\Http\Controllers\TeachController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\TAController;
 use App\Http\Middleware\RedirectIfSessionExpired;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,6 +32,8 @@ Route::middleware([RedirectIfSessionExpired::class])->group(function () {
 
     Route::get('learn/assignments/list', [LearnController::class, 'showCourseAssignments'])->name('learn.assignments');
     Route::get('learn/assignment/{cid}/{assid}/grades',[LearnController::class,'showAssignmentGrades'])->name('learn.assignment.grades');
+
+    Route::get('learn/ta', [TAController::class, 'index'])->name('learn.ta');
 
     Route::get('/teach', [TeachController::class, 'index'])->name('teach.index');
     Route::get('/teach/manage/announcement/add', [TeachController::class, 'addAnnouncement'])->name('teach.ann.add');

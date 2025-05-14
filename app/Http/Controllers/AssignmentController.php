@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use App\Models\Assignment;
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
 {
-
-
     public function addAssignment(Request $request)
     {
-        $teacherId = Auth::guard('teacher')->user()->tid;
-        $courses = Course::where('tid', $teacherId)->get();
+        $courses = $this->getManageableCourses();
 
         return view('teach.manage.assignment.create', compact('courses'));
     }

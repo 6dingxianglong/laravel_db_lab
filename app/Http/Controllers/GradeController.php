@@ -3,21 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; 
-use App\Models\Course;
 use App\Models\Grade;
 use App\Models\Assignment;
 use App\Models\Enrollment;
 use App\Models\Student; 
 use Spatie\SimpleExcel\SimpleExcelWriter;
-use Illuminate\Support\Facades\Auth;
 
 class GradeController extends Controller
 {
     public function showCourseAssignments(Request $request)
     {
-        $teacher = Auth::guard('teacher')->user();
-        $courses = Course::where('tid', $teacher->tid)->get();        
-
+    
+        $courses = $this->getManageableCourses();
+     
         $selectedCid = $request->input('cid');
 
         $assignments = [];
