@@ -1,64 +1,87 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\LearnController;
-use App\Http\Controllers\TeachController;
-use App\Http\Controllers\AssignmentController;
-use App\Http\Controllers\SubmissionController;
-use App\Http\Controllers\GradeController;
-use App\Http\Controllers\TAController;
+use App\Http\Controllers\{
+    HomeController, CourseController, AuthController, LearnController,
+    TeachController, AssignmentController, SubmissionController,
+    GradeController, TAController
+};
 use App\Http\Middleware\RedirectIfSessionExpired;
 
+// 公開頁面
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/news/all', [HomeController::class, 'allNews'])->name('news.all');
 Route::get('/courses/all', [HomeController::class, 'allCourses'])->name('courses.all');
 
-Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
-Route::get('/courses/{cid}', [CourseController::class, 'show'])->name('courses.show');
+Route::prefix('courses')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/{cid}', [CourseController::class, 'show'])->name('courses.show');
+});
 
+// 認證
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/login', 'showLoginForm')->name('login');
+    Route::post('/login', 'login');
+    Route::get('/logout', 'logout')->name('logout');
+});
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
+// 需登入區域
 Route::middleware([RedirectIfSessionExpired::class])->group(function () {
-    Route::get('/learn', [LearnController::class, 'index'])->name('learn.index');
-    Route::get('/learn/announcement/list/{cid}', [LearnController::class, 'listAnnouncement'])->name('learn.ann.list');
-    Route::get('/learn/assignment/list/{cid}', [LearnController::class, 'listAssignment'])->name('learn.ass.list');
-    Route::post('/learn/assignment/submit', [LearnController::class, 'submitAssignment'])->name('learn.ass.submit');
 
-    Route::get('learn/assignments/list', [LearnController::class, 'showCourseAssignments'])->name('learn.assignments');
-    Route::get('learn/assignment/{cid}/{assid}/grades',[LearnController::class,'showAssignmentGrades'])->name('learn.assignment.grades');
+    // 學習區 (Learn)
+    Route::prefix('learn')->name('learn.')->group(function () {
+        Route::get('/', [LearnController::class, 'index'])->name('index');
+        Route::get('/announcement/list/{cid}', [LearnController::class, 'listAnnouncement'])->name('ann.list');
+        Route::get('/assignment/list/{cid}', [LearnController::class, 'listAssignment'])->name('ass.list');
+        Route::post('/assignment/submit', [LearnController::class, 'submitAssignment'])->name('ass.submit');
 
-    Route::get('learn/ta', [TAController::class, 'index'])->name('learn.ta');
+        Route::get('/assignments/list', [LearnController::class, 'showCourseAssignments'])->name('assignments');
+        Route::get('/assignment/{cid}/{assid}/grades', [LearnController::class, 'showAssignmentGrades'])->name('assignment.grades');
 
-    Route::get('/teach', [TeachController::class, 'index'])->name('teach.index');
-    Route::get('/teach/manage/announcement/add', [TeachController::class, 'addAnnouncement'])->name('teach.ann.add');
-    Route::post('/teach/manage/announcement/store', [TeachController::class, 'storeAnnouncement'])->name('teach.ann.store');
-    Route::get('/teach/manage/announcement/list/{cid}', [TeachController::class, 'listAnnouncement'])->name('teach.ann.list');
-    Route::get('/teach/manage/announcement/edit/{annid}', [TeachController::class, 'editAnnouncement'])->name('teach.ann.edit');
-    Route::put('/teach/manage/announcement/update/{annid}', [TeachController::class, 'updateAnnouncement'])->name('teach.ann.update');
-    Route::delete('/teach/manage/announcement/delete/{annid}', [TeachController::class, 'deleteAnnouncement'])->name('teach.ann.delete');
-    Route::get('/teach/manage/assignment/add', [AssignmentController::class, 'addAssignment'])->name('teach.ass.add');
-    Route::post('teach/manage/assignment/store', [AssignmentController::class, 'storeAssignment'])->name('teach.ass.store');
-    Route::get('/teach/manage/assignment/list/{cid}', [AssignmentController::class, 'listAssignment'])->name('teach.ass.list');
-    Route::get('/teach/manage/assignment/edit/{assid}', [AssignmentController::class, 'editAssignment'])->name('teach.ass.edit');
-    Route::put('/teach/manage/assignment/update/{assid}', [AssignmentController::class, 'updateAssignment'])->name('teach.ass.update');
-    Route::delete('/teach/manage/assignment/delete/{assid}', [AssignmentController::class, 'deleteAssignment'])->name('teach.ass.delete');
+        Route::get('/ta', [TAController::class, 'index'])->name('ta');
+    });
 
-    Route::get('/teach/manage/submissions/{assid}', [SubmissionController::class, 'listSubmission']) ->name('teach.ass.submissions');
-    Route::get('/submission/download/{filename}', [SubmissionController::class, 'download'])->name('submission.download');
-    Route::post('/submission/update/{sid}/{assid}', [SubmissionController::class, 'updateAssignment'])->name('submission.update');
-    Route::post('/submission/email', [SubmissionController::class, 'sendEmail'])->name('submission.email');
+    // 教學區 (Teach)
+    Route::prefix('teach')->name('teach.')->group(function () {
+        Route::get('/', [TeachController::class, 'index'])->name('index');
 
-    Route::get('/course/assignments', [GradeController::class, 'showCourseAssignments'])->name('course.assignments');
-    Route::get('/assignment/{cid}/{assid}/grades', [GradeController::class, 'showAssignmentGrades'])->name('assignment.grades');
-    Route::post('/grades/update', [GradeController::class, 'updateOrCreate'])->name('grade.updateOrCreate');
+        // Announcements
+        Route::prefix('announcement')->name('ann.')->group(function () {
+            Route::get('/add', [TeachController::class, 'addAnnouncement'])->name('add');
+            Route::post('/store', [TeachController::class, 'storeAnnouncement'])->name('store');
+            Route::get('/list/{cid}', [TeachController::class, 'listAnnouncement'])->name('list');
+            Route::get('/edit/{annid}', [TeachController::class, 'editAnnouncement'])->name('edit');
+            Route::put('/update/{annid}', [TeachController::class, 'updateAnnouncement'])->name('update');
+            Route::delete('/delete/{annid}', [TeachController::class, 'deleteAnnouncement'])->name('delete');
+        });
 
-    Route::get('/grades/export/excel/{cid}/{assid}', [GradeController::class, 'exportExcel'])->name('grade.export.excel');
-    Route::get('/grades/export/pdf/{cid}/{assid}', [GradeController::class, 'exportPdf'])->name('grade.export.pdf');
+        // Assignments
+        Route::prefix('assignment')->name('ass.')->group(function () {
+            Route::get('/add', [AssignmentController::class, 'addAssignment'])->name('add');
+            Route::post('/store', [AssignmentController::class, 'storeAssignment'])->name('store');
+            Route::get('/list/{cid}', [AssignmentController::class, 'listAssignment'])->name('list');
+            Route::get('/edit/{assid}', [AssignmentController::class, 'editAssignment'])->name('edit');
+            Route::put('/update/{assid}', [AssignmentController::class, 'updateAssignment'])->name('update');
+            Route::delete('/delete/{assid}', [AssignmentController::class, 'deleteAssignment'])->name('delete');
+        });
+    });
 
+    // 作業繳交/批改 (Submission)
+    Route::prefix('submission')->name('submission.')->group(function () {
+        Route::get('/download/{filename}', [SubmissionController::class, 'download'])->name('download');
+        Route::post('/update/{sid}/{assid}', [SubmissionController::class, 'updateAssignment'])->name('update');
+        Route::post('/email', [SubmissionController::class, 'sendEmail'])->name('email');
+    });
+
+    // 成績管理 (Grade)
+    Route::prefix('grades')->name('grade.')->group(function () {
+        Route::get('/course/assignments', [GradeController::class, 'showCourseAssignments'])->name('course.assignments');
+        Route::get('/assignment/{cid}/{assid}/grades', [GradeController::class, 'showAssignmentGrades'])->name('assignment.grades');
+        Route::post('/update', [GradeController::class, 'updateOrCreate'])->name('updateOrCreate');
+        Route::get('/export/excel/{cid}/{assid}', [GradeController::class, 'exportExcel'])->name('export.excel');
+        Route::get('/export/pdf/{cid}/{assid}', [GradeController::class, 'exportPdf'])->name('export.pdf');
+    });
+
+    // 查詢作業繳交名單
+    Route::get('/teach/manage/submissions/{assid}', [SubmissionController::class, 'listSubmission'])->name('teach.ass.submissions');
 });
