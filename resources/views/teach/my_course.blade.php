@@ -8,7 +8,7 @@
     .course-title {
         text-align: center;
         margin-bottom: 30px;
-        color: #333;
+        color: #1a237e; 
         font-weight: bold;
     }
     
@@ -26,7 +26,7 @@
     }
     
     .table th {
-        background-color: #fb782d;
+        background-color: #1976d2; 
         color: white;
         padding: 15px;
         font-size: 16px;
@@ -42,13 +42,13 @@
     }
     
     .table tbody tr:hover {
-        background-color: #f9f9f9;
+        background-color: #e3f2fd; 
     }
     
     .action-link {
         display: inline-block;
         padding: 6px 12px;
-        background-color: #fbc02d;
+        background-color: #2196f3;
         color: white;
         text-decoration: none;
         border-radius: 4px;
@@ -56,10 +56,11 @@
     }
     
     .action-link:hover {
-        background-color: #f9a825;
+        background-color: #1976d2;
         color: white;
     }
 </style>
+
 
 <div class="course-container">
     

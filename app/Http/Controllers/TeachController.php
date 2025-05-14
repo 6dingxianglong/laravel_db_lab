@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use App\Models\Announcement;
-use App\Models\Assignment;
+use App\Models\TA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -15,19 +15,14 @@ class TeachController extends Controller
 
     public function index()
     {
-        $teacherId = Auth::guard('teacher')->user()->tid;
-
-        $courses = Course::withCount('enrollments')
-            ->where('tid', $teacherId)
-            ->get();
+        $courses = $this->getManageableCourses();
 
         return view('teach.index', compact('courses'));
     }
 
     public function addAnnouncement(Request $request)
     {
-        $teacherId = Auth::guard('teacher')->user()->tid;
-        $courses = Course::where('tid', $teacherId)->get();
+        $courses = $this->getManageableCourses();
 
         return view('teach.manage.announcement.create', compact('courses'));
     }
