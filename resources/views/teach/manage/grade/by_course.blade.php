@@ -4,7 +4,7 @@
 <div class="container">
     <h2>選擇課程以查看其作業</h2>
 
-    <form method="GET" action="{{ route('course.assignments') }}" class="mb-4">
+    <form method="GET" action="{{ route('grade.course.assignments') }}" class="mb-4">
         <div class="input-group">
             <select name="cid" class="form-select" onchange="this.form.submit()">
                 <option value="">請選擇課程</option>
@@ -25,7 +25,7 @@
                 @foreach ($assignments as $assignment)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{ $assignment->title }}
-                        <a href="{{ route('assignment.grades', ['cid' => $selectedCid, 'assid' => $assignment->assid]) }}" class="btn btn-sm btn-primary">
+                        <a href="{{ route('grade.assignment.grades', ['cid' => $selectedCid, 'assid' => $assignment->assid]) }}" class="btn btn-sm btn-primary">
                             查看成績
                         </a>
                     </li>

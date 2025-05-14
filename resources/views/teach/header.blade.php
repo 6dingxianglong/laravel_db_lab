@@ -22,7 +22,7 @@
                 <a href="#" class="btn btn-outline-secondary me-2">人員管理</a>
                 <a href="{{ route('teach.ann.add') }}" class="btn btn-outline-secondary me-2">新增公告</a>
                 <a href="{{ route('teach.ass.add') }}" class="btn btn-outline-secondary me-2">新增作業</a>
-                <a href="{{ route('course.assignments') }}" class="btn btn-outline-secondary me-2">成績管理</a>
+                <a href="{{ route('grade.course.assignments') }}" class="btn btn-outline-secondary me-2">成績管理</a>
 
                 <p class="m-0 px-3 border-start border-end">
                     <i class="bi bi-person-fill me-1"></i>
@@ -34,7 +34,7 @@
                 <a href="{{ route('learn.ta') }}" class="btn btn-outline-secondary me-2">課程管理</a>
                 <a href="{{ route('teach.ann.add') }}" class="btn btn-outline-secondary me-2">新增公告</a>
                 <a href="{{ route('teach.ass.add') }}" class="btn btn-outline-secondary me-2">新增作業</a>
-                <a href="{{ route('course.assignments') }}" class="btn btn-outline-secondary me-2">成績管理</a>
+                <a href="{{ route('grade.course.assignments') }}" class="btn btn-outline-secondary me-2">成績管理</a>
                 <a href="{{ route('learn.index') }}" class="btn btn-outline-secondary me-2">我的課程</a>
 
                 <p class="m-0 px-3 border-start border-end">
